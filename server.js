@@ -45,7 +45,6 @@ process.on('SIGINT', function () {////this function will run jst before app is c
 // https://mongoosejs.com/docs/schematypes.html#what-is-a-schematype
 
 var userSchema = new mongoose.Schema({
-    uid: Number,
     uname: String,
     email: String,
     password: String,
@@ -72,11 +71,11 @@ app.use("/", express.static(path.resolve(path.join(__dirname, "public"))));
 
 
 app.post("/signup", (req, res, next) => {
-    if (!req.body.uid || !req.body.uname || !req.body.email || !req.body.password || !req.body.phone || !req.body.gender) {
+    if (!req.body.uname || !req.body.email || !req.body.password || !req.body.phone || !req.body.gender) {
         res.status(403).send(`  please send name, email, passwod, phone and gender in json body.
         e.g:
         {
-            "uid":"User ID",
+            
             "uname": "Sameer",
             "email": "kb337137@gmail.com",
             "password": "abc",
@@ -90,7 +89,6 @@ app.post("/signup", (req, res, next) => {
             bcrypt.stringToHash(req.body.password).then(ispasswordhash => {
                 console.log("hash: ", ispasswordhash);
                 var newUser = new userModel({
-                    uid: req.body.uid,
                     uname: req.body.uname,
                     email: req.body.email,
                     password: ispasswordhash,
@@ -154,7 +152,9 @@ app.post('/login', (req, res) => {
                     let token = jwt.sign({
                         id: data._id,
                         name: data.uname,
-                        email: data.email
+                        email: data.email,
+                        phone:data.phone,
+                        gender:data.gender,
 
                     }, SERVER_SECRET)
 
@@ -175,6 +175,8 @@ app.post('/login', (req, res) => {
                             email: data.email,
                             phone: data.phone,
                             gender: data.gender,
+                            phone:data.phone,
+                            gender:data.gender,
                         },
 
                     });
@@ -221,6 +223,8 @@ app.use(function (req, res, next) {
                     id: decodedData.id,
                     name: decodedData.uname,
                     email: decodedData.email,
+                    phone:decodedData.phone,
+                    gender:decodedData.gender,
                 }, SERVER_SECRET)
                 res.cookie('jToken', token, {
                     maxAge: 86_400_000,
@@ -254,23 +258,23 @@ app.get("/profile", (req, res, next) => {
     });
 
 });
-app.post("/send", (req, res, next) => {
-    var client = new postmark.Client(req.cookie.jToken);
-    res.send({
-        email: client.sendEmail({
-            "From": req.body.from,
-            "To": req.body.to,
-            "Subject": req.body.subject,
-            "TextBody": req.body.emailBody
-        }, function (err, to) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            console.log("Email sent to: %s", to);
-        })
-    })
-})
+// app.post("/send", (req, res, next) => {
+//     var client = new postmark.Client(req.cookie.jToken);
+//     res.send({
+//         email: client.sendEmail({
+//             "From": req.body.from,
+//             "To": req.body.to,
+//             "Subject": req.body.subject,
+//             "TextBody": req.body.emailBody
+//         }, function (err, to) {
+//             if (err) {
+//                 console.log(err);
+//                 return;
+//             }
+//             console.log("Email sent to: %s", to);
+//         })
+//     })
+// })
 app.post("/logout", (req, res, next) => {
     res.cookie("jToken", "", {
         maxAge: 86_400_000,

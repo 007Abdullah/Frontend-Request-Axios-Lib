@@ -4,7 +4,6 @@ function signup() {
         method: 'post',
         url: "http://localhost:5000/signup",
         data: {
-            uid: document.getElementById("txt_id").value,
             uname: document.getElementById("txt_name").value,
             email: document.getElementById("txt_email").value,
             password: document.getElementById("txt_password").value,
@@ -49,10 +48,10 @@ function login() {
 function profile() {
     axios.get('http://localhost:5000/profile').then(resp => {
 
-        console.log(resp.data.profile.uname);
-        console.log(resp.data.profile.email);
-        console.log(resp.data.profile.gender);
-        console.log(resp.data.profile._id);
+        document.getElementById("dis_name").innerHTML = resp.data.profile.uname;
+        document.getElementById("dis_email").innerHTML = resp.data.profile.email
+        document.getElementById("dis_phone").innerHTML = resp.data.profile.phone
+        document.getElementById("dis_gender").innerHTML = resp.data.profile.gender
 
 
     });
