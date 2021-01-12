@@ -227,7 +227,7 @@ app.use(function (req, res, next) {
                     httpOnly: true
                 });
                 req.body.jToken = decodedData // this line disscuse how it work
-                // next();
+                next();
             }
 
         } else {

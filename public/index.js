@@ -47,5 +47,13 @@ function login() {
 }
 
 function profile() {
+    axios.get('http://localhost:5000/profile').then(resp => {
 
+        console.log(resp.data.profile.uname);
+        console.log(resp.data.profile.email);
+        console.log(resp.data.profile.gender);
+        console.log(resp.data.profile._id);
+
+
+    });
 }
