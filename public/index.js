@@ -47,12 +47,9 @@ function login() {
 
 function profile() {
     axios.get('http://localhost:5000/profile').then(resp => {
-
         document.getElementById("dis_name").innerHTML = resp.data.profile.uname;
-        document.getElementById("dis_email").innerHTML = resp.data.profile.email
-        document.getElementById("dis_phone").innerHTML = resp.data.profile.phone
-        document.getElementById("dis_gender").innerHTML = resp.data.profile.gender
-
-
+        document.getElementById("dis_email").innerHTML = resp.data.profile.email;
+        document.getElementById("dis_phone").innerHTML = resp.data.profile.phone;
+        document.getElementById("dis_gender").innerHTML = resp.data.profile.gender;
     });
 }
