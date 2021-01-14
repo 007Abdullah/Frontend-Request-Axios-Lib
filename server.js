@@ -153,8 +153,8 @@ app.post('/login', (req, res) => {
                         id: data._id,
                         name: data.uname,
                         email: data.email,
-                        phone:data.phone,
-                        gender:data.gender,
+                        phone: data.phone,
+                        gender: data.gender,
 
                     }, SERVER_SECRET)
 
@@ -175,18 +175,21 @@ app.post('/login', (req, res) => {
                             email: data.email,
                             phone: data.phone,
                             gender: data.gender,
-                            phone:data.phone,
-                            gender:data.gender,
+                            phone: data.phone,
+                            gender: data.gender,
                         },
 
                     });
 
-                } else {
-                    console.log("not matched");
-                    res.status(401).send({
-                        message: "incorrect password"
+                }
+                else {
+                    console.log("Password Not Match");
+                    res.send({
+                        status: 409,
+                        message: "Inncorrect Password"
                     })
                 }
+
             }).catch(e => {
                 console.log("error: ", e)
             })
@@ -223,8 +226,8 @@ app.use(function (req, res, next) {
                     id: decodedData.id,
                     name: decodedData.uname,
                     email: decodedData.email,
-                    phone:decodedData.phone,
-                    gender:decodedData.gender,
+                    phone: decodedData.phone,
+                    gender: decodedData.gender,
                 }, SERVER_SECRET)
                 res.cookie('jToken', token, {
                     maxAge: 86_400_000,

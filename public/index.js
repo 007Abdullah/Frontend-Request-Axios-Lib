@@ -29,18 +29,16 @@ function login() {
         data: {
             email: document.getElementById("txt_email").value,
             password: document.getElementById("txt_password").value,
-        },
-        withCredentials: true
-    })
-        .then(function (response) {
-            console.log(response.data.message);
-            alert(response.data.message);
-            window.location.href = "profile.html";
+        }, withCredentials: true
 
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    }).then((response) => {
+        console.log(response);
+        alert(response.data.message)
+        location.href = "./profile.html"
+    }, (error) => {
+        console.log(error);
+        alert(error)
+    });
 
     return false;
 }
